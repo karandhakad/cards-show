@@ -11,11 +11,9 @@ function Cards() {
   const [isLoading, setIsLoading] = useState(true);
 
   // for Loading
-  useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
     }, 5000);
-  }, []);
 
   // for set Api data into array
   useEffect(() => {
