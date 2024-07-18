@@ -16,7 +16,7 @@ function Cards() {
   // for Loading
   setTimeout(() => {
     setIsLoading(false);
-  }, 0);
+  }, 3000);
   
   // for set Api data into array
   useEffect(() => {
@@ -32,7 +32,7 @@ function Cards() {
     });
     setCardData(newCardData);
   };
-  
+  //for page change
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
   };
