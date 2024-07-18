@@ -32,16 +32,6 @@ function Cards() {
     });
     setCardData(newCardData);
   };
-
-  //for Page Change
-  // function handlePageChange (event,value) {
-  //   {
-  //     let updatedCardData = cardData.filter((val) => {
-  //       return val.id > value * 6;
-  //     });
-  //     setCardData(updatedCardData);
-  //   }
-  // };
   
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
