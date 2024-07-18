@@ -7,14 +7,17 @@ import CircularProgress from "@mui/material/CircularProgress";
 function Cards() {
   const apidata = useContext(userContext);
 
+  
   const [cardData, setCardData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+  
   // for Loading
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
-
+  setTimeout(() => {
+    setIsLoading(false);
+  }, 0);
+  
   // for set Api data into array
   useEffect(() => {
     apidata.liveData().then((result) => {
@@ -24,22 +27,28 @@ function Cards() {
 
   // for Hide Card
   const hideCard = (id) => {
-    const newCardData = cardData.filter((value, index) => {
+    const newCardData = cardData.filter((value) => {
       return value.id != id;
     });
-
     setCardData(newCardData);
   };
 
   //for Page Change
+  // function handlePageChange (event,value) {
+  //   {
+  //     let updatedCardData = cardData.filter((val) => {
+  //       return val.id > value * 6;
+  //     });
+  //     setCardData(updatedCardData);
+  //   }
+  // };
+  
   const handlePageChange = (event, value) => {
-    {
-      let updatedCardData = cardData.filter((val, index) => {
-        return val.id > value * 6;
-      });
-      setCardData(updatedCardData);
-    }
+    setCurrentPage(value);
   };
+
+  const paginatedData = cardData.slice((currentPage - 1) * itemsPerPage,currentPage * itemsPerPage);
+
 
   return (
     <>
@@ -51,7 +60,7 @@ function Cards() {
               <p style={{ marginLeft: "15px" }}>Loading...</p>{" "}
             </div>
           ) : (
-            cardData.slice(0, 6).map((value, index) => {
+            paginatedData.map((value, index) => {
               return (
                 <div className="card" key={value.id}>
                   <div
@@ -75,7 +84,13 @@ function Cards() {
       </div>
       {isLoading ? null : (
         <div className="navigation">
-          <Pagination count={10} color="primary" onChange={handlePageChange} />
+          {/* <Pagination count={10} color="primary" onChange={handlePageChange} /> */}
+          <Pagination
+            count={Math.ceil(cardData.length / itemsPerPage)}
+            color="primary"
+            page={currentPage}
+            onChange={handlePageChange}
+          />
         </div>
       )}
     </>
